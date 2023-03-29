@@ -10,6 +10,7 @@ import Editor_shape.CompositionLine;
 import Editor_shape.GenerationLine;
 import Editor_shape.Line;
 import Editor_shape.Port;
+import Editor_shape.Group;
 
 public class createLine extends Mode {
     private String Line_name = null;
@@ -28,21 +29,27 @@ public class createLine extends Mode {
 
         start_point = e.getPoint();
         obj_list = canvas.get_shapeList();
+        // Group group = new Group();
         for(int i = 0; i < obj_list.size(); i++) {
             Shape obj = obj_list.get(i);
             if(obj.inside(start_point)) {
-                canvas.selectedObj = obj;
+
+                if(obj instanceof Group)
+                    canvas.selectedObj = findShapeFromGroupObj((Group)obj, start_point);
+                else
+                    canvas.selectedObj = obj;
                 break;
             }
         }
-        start_point = which_point(start_point, "start");
-        System.out.println(start_point);
+        if(canvas.selectedObj != null)
+            start_point = which_point(start_point, "start");
+        // System.out.println(start_point);
         privous_obj = canvas.selectedObj;
         canvas.reset();
     }
 
     public void mouseDragged(MouseEvent e) {
-        if(start_point != null) {
+        if(start_point != null && privous_obj != null) {
             Point mouse_point = e.getPoint();
             Line tempLine = null;
 
@@ -60,13 +67,21 @@ public class createLine extends Mode {
 
     public void mouseReleased(MouseEvent e) {
 
-        if(start_point != null) {
+        if(start_point != null && privous_obj != null) {
             end_point = e.getPoint();
             for(int i = 0; i < obj_list.size(); i++) {
                 Shape obj = obj_list.get(i);
                 if(obj.inside(end_point) && privous_obj != obj) {
-                    canvas.selectedObj = obj;
-                    end_point = which_point(end_point, "end");
+
+                    if(obj instanceof Group)
+                        canvas.selectedObj = findShapeFromGroupObj((Group)obj, end_point);
+                    else
+                        canvas.selectedObj = obj;
+
+                    if(canvas.selectedObj != null)
+                        end_point = which_point(end_point, "end");
+                    else
+                        break;
 
                     if(Line_name == "association") {
                         line_obj = new AssociationLine(start_point.x, start_point.y, end_point.x, end_point.y);
@@ -115,7 +130,23 @@ public class createLine extends Mode {
                 new_point.y = (int)port.getCenterY();
             }
         }
-        System.out.println("HERE");
         return new_point;
     }
-}
+
+    public Shape findShapeFromGroupObj(Group group_obj,Point point) {
+        List<Shape> shapes = group_obj.get_Shapelist();
+        Shape target_shape = null;
+        for(int i = 0; i < shapes.size(); i++) {
+            Shape obj = shapes.get(i);
+            if(obj.inside(point)) {
+                if(obj instanceof Group)
+                    target_shape = findShapeFromGroupObj((Group)obj, point);
+                else
+                    target_shape = obj;
+                break;
+            }
+        }
+        
+        return target_shape;
+    }
+}           

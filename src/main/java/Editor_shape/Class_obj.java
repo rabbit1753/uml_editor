@@ -3,6 +3,7 @@ package Editor_shape;
 import java.awt.Color;
 import java.awt.Graphics;
 
+
 public class Class_obj extends Basic_Obj {
 
     public Class_obj(int x1, int y1, int depth) {
@@ -22,7 +23,11 @@ public class Class_obj extends Basic_Obj {
         for(int i = 1; i < 3; i++) {
             g.drawLine(x1, y1 + (height/3)*i, x2, y1 + (height/3)*i);
         }
-        // g.setColor(Color.black);
+
+        int stringWidth = g.getFontMetrics(font).stringWidth(obj_name);
+        double empty = (Math.abs(x1-x2) - stringWidth) / 2; 
+        g.setFont(font);
+        g.drawString(obj_name, x1 + (int)empty, y1 + 25);
         // System.out.println("Draw Class");
     }
 }

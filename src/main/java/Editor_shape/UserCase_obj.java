@@ -19,7 +19,12 @@ public class UserCase_obj extends Basic_Obj {
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
         g.drawOval(x1, y1, width, height);
-        System.out.println("Draw UserCase");
+        // System.out.println("Draw UserCase");
+
+        int stringWidth = g.getFontMetrics(font).stringWidth(obj_name);
+        double empty = (Math.abs(x1-x2) - stringWidth) / 2; 
+        g.setFont(font);
+        g.drawString(obj_name, x1 + (int)empty, y1 + 45);
     }
 
 }

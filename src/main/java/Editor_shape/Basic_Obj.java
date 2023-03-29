@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Graphics;
 import java.awt.Point;
-// import java.awt.Canvas;
-// import java.awt.Color;
+import java.awt.Font;
 
 public abstract class Basic_Obj extends Shape {
 
     protected List<Line> lines = new ArrayList<Line>(); 
+    protected Font font = new Font(Font.DIALOG, Font.BOLD, 14);
     protected int width, height, depth;
     protected String obj_name = "Obj_name";
     protected Point[] obj_points = new Point[4];
@@ -62,5 +62,9 @@ public abstract class Basic_Obj extends Shape {
 
     public Port getPorts(int portIndex) {
         return obj_ports[portIndex];
+    }
+
+    public void setObjName(String name) {
+        this.obj_name = name;
     }
 }
