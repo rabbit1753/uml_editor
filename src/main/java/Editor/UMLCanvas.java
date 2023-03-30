@@ -110,15 +110,13 @@ public class UMLCanvas extends JPanel {
             Group group_obj = (Group)selectedObj;
             List<Shape> shapes = group_obj.get_Shapelist();
             for(int i = 0; i < shapes.size(); i++) {
-                shape_list.add(shapes.get(i));
+                shapes.get(i).setObjName(name);
             }
-            shape_list.remove(group_obj);
-            System.out.println("Rename");
         }
         else if(selectedObj != null) {
             selectedObj.setObjName(name);
-            repaint();
         }
+        repaint();
     }
 
     public void paint(Graphics g) {
