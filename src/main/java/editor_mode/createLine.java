@@ -5,9 +5,6 @@ import java.awt.Point;
 import java.util.List;
 
 import Editor_shape.Shape;
-import Editor_shape.AssociationLine;
-import Editor_shape.CompositionLine;
-import Editor_shape.GenerationLine;
 import Editor_shape.Line;
 import Editor_shape.Port;
 import Editor_shape.Group;
@@ -19,6 +16,7 @@ public class createLine extends Mode {
     private List<Shape> obj_list = null;
     private Shape privous_obj = null;
     private int port_index_start = -1, port_index_end = -1;
+    private ShapeFactory factory = new ShapeFactory();
 
     public createLine(String Line_Name) {
         this.Line_name = Line_Name;
@@ -53,13 +51,8 @@ public class createLine extends Mode {
             Point mouse_point = e.getPoint();
             Line tempLine = null;
 
-            if(Line_name == "association") 
-                tempLine = new AssociationLine(start_point.x, start_point.y, mouse_point.x, mouse_point.y);
-            else if(Line_name == "generation") 
-                tempLine = new GenerationLine(start_point.x, start_point.y, mouse_point.x, mouse_point.y);
-            else if(Line_name == "composition") 
-                tempLine = new CompositionLine(start_point.x, start_point.y, mouse_point.x, mouse_point.y);
-            
+            tempLine = factory.createLine(Line_name, start_point, mouse_point);
+
             canvas.draggingLine = tempLine;
             canvas.repaint();
         }
@@ -83,18 +76,7 @@ public class createLine extends Mode {
                     else
                         break;
 
-                    if(Line_name == "association") {
-                        line_obj = new AssociationLine(start_point.x, start_point.y, end_point.x, end_point.y);
-                        System.out.println("create association line");
-                    }
-                    else if(Line_name == "generation") {
-                        line_obj = new GenerationLine(start_point.x, start_point.y, end_point.x, end_point.y);
-                        System.out.println("create association line");
-                    }
-                    else if(Line_name == "composition") {
-                        line_obj = new CompositionLine(start_point.x, start_point.y, end_point.x, end_point.y);
-                        System.out.println("create association line");
-                    }
+                    line_obj = factory.createLine(Line_name, start_point, end_point);
 
                     line_obj.setPorts(privous_obj.getPorts(port_index_start), canvas.selectedObj.getPorts(port_index_end));
                     privous_obj.getPorts(port_index_start).addLine(line_obj);

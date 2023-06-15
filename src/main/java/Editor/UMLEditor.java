@@ -1,13 +1,8 @@
 package Editor;
 
 import java.awt.BorderLayout;
-// import java.awt.Dimension;
 
 import javax.swing.JFrame;
-// import javax.swing.JPanel;
-import javax.swing.JMenuBar;
-
-// import Editor.ToolBar;
 
 public class UMLEditor extends JFrame{
 

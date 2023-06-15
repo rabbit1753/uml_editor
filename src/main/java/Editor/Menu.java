@@ -2,9 +2,7 @@ package Editor;
 
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
-import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
