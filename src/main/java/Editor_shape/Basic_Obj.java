@@ -8,7 +8,7 @@ import java.awt.Font;
 
 public abstract class Basic_Obj extends Shape {
 
-    protected List<Line> lines = new ArrayList<Line>(); 
+    // protected List<Line> lines = new ArrayList<Line>(); 
     protected Font font = new Font(Font.DIALOG, Font.BOLD, 14);
     protected int width, height, depth;
     protected String obj_name = "Obj_name";

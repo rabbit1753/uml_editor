@@ -16,5 +16,4 @@ public abstract class Mode implements MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
-    // public void mouse
 }
